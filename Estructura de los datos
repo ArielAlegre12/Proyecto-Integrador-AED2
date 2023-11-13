@@ -1,0 +1,21 @@
+// Estructura de los datos que vamos a usar, nose, miren si algo creen que podemos cambiar y dejen los comentarios nomas 
+   en lo que modifican jajaja.
+
+
+typedef char tString[40];
+
+typedef struct{
+	int id;
+	tString nombreApellido;
+	int numeroTelefono;
+	int sexo; //1-varon, 2-mujer
+	tString correoElectronico;
+	tString domicilio;
+	int fechaCumple;
+}tInfoContacto;
+
+//esto ya es para la lista enlazada
+typedef struct nodo{
+	tInfoContacto datosContacto;
+	struct nodo *siguiente;
+}tListaContacto;
