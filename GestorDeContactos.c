@@ -5,6 +5,7 @@
 #include "listaEnlazada.h"
 
 //PROGRAMA PRINCIPAL
+//le falta el .h de archivo, y bueno una vez que esté lo implementamos bien y chau ahr
 
 void menuGeneral();
 void ingresarDatos();
