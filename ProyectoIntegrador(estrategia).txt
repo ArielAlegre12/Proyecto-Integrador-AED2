@@ -1,0 +1,46 @@
+"GESTOR DE CONTACTOS"
+- Queremos hacer un programa el cual pueda gestionar los contactos del usuario, almacenando asi nombre,  
+teléfono, direccón de correro, etc. En este programa el usuario podrá ser capas de agregar contactos, 
+eliminar contactos, buscar contactos(a través de su id), listar contactos,
+tambien iremos viendo que otras cosas puede gestionar a medida que avancemos pero esta es la idea principal.
+
+. Estrategia: 
+- Usar TAD para todas las funciones.
+- crear una lista para poder ir guardando contactos en ella tendra: ID, Nombre y Apellido, numero de teléfono,
+                                                                    sexo, edad, correo electronico, domicilio,
+                                                                    fecha de cumpleaños.
+- crear un Archivo para poder tener distintos usuarios y asi tendran su lista de contactos por separados.
+- primero abra un menú principal en el cual le vamos a pedir al usuario que desea hacer: 1- Crear usuario nuevo, 2- Ingresar a usuario existente(
+                                                                                          aca probablemente le podemos pedir que ingrese una clave),
+                                                                                         3- borrar usuario(tambien le podriamos pedir la clave), 
+                                                                                         4-Cerrar el programa.
+
+- Posibles subMenus en cada opcion:
+  .Crear usuario nuevo:
+          -Nombre de usuario.
+          -Clave de usuario(quizás conviene una combinación de numeros).
+          -una vez que hace eso le tiene que salir otro menú que pida el registro de los contactos:
+                         -Registrar nuevo contacto.
+                         -Borrar contacto.
+                         -Editar contacto.
+                         -Mostar contatctos.
+                         -Salir a menú principal.
+
+  .Ingresar a usuario existente:
+          .En este punto hay que mostrarle la lista de usuarios registrados por ej:
+             1-Ariel.
+             2-Benja.
+             3.carlos.
+          .Ingresa el usuario que quiere y le pedimos la clave si es que hacemos que tenga.
+          .luego le mostramos el menú de usuarios:
+              -Registrar nuevo contacto.
+              -Borrar contacto.
+              -Editar contacto.
+              -Mostar contatctos.
+              -Salir a menú principal.
+
+ .Borrar usuario:
+         .Mostramos la lista de usuarios.
+         .El usuario que se eliga se borra.
+ 
+ 
