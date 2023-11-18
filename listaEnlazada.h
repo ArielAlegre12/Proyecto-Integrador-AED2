@@ -16,7 +16,7 @@ typedef struct {
     tString correoElectronico;
     tString domicilio;
     int edad;
-    int fechaCumple;
+    tString fechaCumple;
 } tInfoContacto;
 
 typedef struct nodo {
@@ -54,7 +54,7 @@ void insertarPrimero(tListaContacto **listaContacto, tInfoContacto *infoContacto
     nuevoNodo->siguiente = *listaContacto;
     *listaContacto = nuevoNodo;
 	
-	printf("\n¡Contacto guardado!\n");
+	printf("\nContacto guardado!\n");
 	printf("ID: %d\n", infoContacto->id);
 	printf("Nombre y apellido: %s\n", infoContacto->nombreApellido);
 	printf("Numero de telefono: %s\n", infoContacto->numeroTelefono);
@@ -62,7 +62,7 @@ void insertarPrimero(tListaContacto **listaContacto, tInfoContacto *infoContacto
 	printf("Edad: %d\n", infoContacto->sexo);
 	printf("Correo electronico: %s\n", infoContacto->correoElectronico);
 	printf("Domicilio: %s\n", infoContacto->domicilio);
-	printf("Fecha de cumple: %d\n", infoContacto->fechaCumple);
+	printf("Fecha de cumple: %s\n", infoContacto->fechaCumple);
 	printf("\n");
 }
 
@@ -73,15 +73,15 @@ void insertarAdelante(tListaContacto **listaContacto, tInfoContacto *infoContact
     nuevoNodo->siguiente = *listaContacto;
     *listaContacto = nuevoNodo;
 	
-	printf("\n¡Contacto guardado!\n");
+	printf("\nContacto guardado!\n");
 	printf("ID: %d\n", infoContacto->id);
 	printf("Nombre y apellido: %s\n", infoContacto->nombreApellido);
-	printf("Numero de telefono: %d", infoContacto->numeroTelefono);
+	printf("Numero de telefono: %s\n", infoContacto->numeroTelefono);
 	printf("sexo(1- varon, 2- mujer): %d\n", infoContacto->sexo);
 	printf("Edad: %d\n", infoContacto->sexo);
 	printf("Correo electronico: %s\n", infoContacto->correoElectronico);
 	printf("Domicilio: %s\n", infoContacto->domicilio);
-	printf("Fecha de cumpleaños: %d\n", infoContacto->fechaCumple);
+	printf("Fecha de cumple: %s\n", infoContacto->fechaCumple);
 	printf("\n");
 	
 }
@@ -102,16 +102,17 @@ void visualizarContactos(tListaContacto *listaContacto, tInfoContacto *infoConta
 	
 	if(!listaVacia(aux)){
 		printf("\n***Lista de contactos****\n");
+		printf("\n");
 		while(aux != NULL){
 		    printf("ID: %d\n", infoContacto->id);
-	        printf("Nombre y apellido: %s\n", infoContacto->nombreApellido);
-	        printf("Numero de telefono: %d", infoContacto->numeroTelefono);
-	        printf("sexo(1- varon, 2- mujer): %d\n", infoContacto->sexo);
-	        printf("Edad: %d\n", infoContacto->sexo);
-	        printf("Correo electronico: %s\n", infoContacto->correoElectronico);
-	        printf("Domicilio: %s\n", infoContacto->domicilio);
-	        printf("Fecha de cumpleaños: %d\n", infoContacto->fechaCumple);
-	        printf("\n");
+	printf("Nombre y apellido: %s\n", infoContacto->nombreApellido);
+	printf("Numero de telefono: %s\n", infoContacto->numeroTelefono);
+	printf("sexo(1- varon, 2- mujer): %d\n", infoContacto->sexo);
+	printf("Edad: %d\n", infoContacto->sexo);
+	printf("Correo electronico: %s\n", infoContacto->correoElectronico);
+	printf("Domicilio: %s\n", infoContacto->domicilio);
+	printf("Fecha de cumple: %s\n", infoContacto->fechaCumple);
+	printf("\n");
 	        
 	        aux = aux->siguiente;
 		}
@@ -133,14 +134,15 @@ void insertarEnPosK(int pos, tListaContacto **listaContacto, tInfoContacto *info
     aux->siguiente = nuevoNodo;
     
     
+	printf("\nContacto guardado!\n");
 	printf("ID: %d\n", infoContacto->id);
 	printf("Nombre y apellido: %s\n", infoContacto->nombreApellido);
-	printf("Numero de telefono: %d", infoContacto->numeroTelefono);
+	printf("Numero de telefono: %s\n", infoContacto->numeroTelefono);
 	printf("sexo(1- varon, 2- mujer): %d\n", infoContacto->sexo);
 	printf("Edad: %d\n", infoContacto->sexo);
 	printf("Correo electronico: %s\n", infoContacto->correoElectronico);
 	printf("Domicilio: %s\n", infoContacto->domicilio);
-	printf("Fecha de cumpleaños: %d\n", infoContacto->fechaCumple);
+	printf("Fecha de cumple: %s\n", infoContacto->fechaCumple);
 	printf("\n");
 }
 
