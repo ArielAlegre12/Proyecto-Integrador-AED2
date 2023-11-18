@@ -5,9 +5,9 @@
 #include "listaEnlazada.h"
 
 //PROGRAMA PRINCIPAL
-//le falta el .h de archivo, y bueno una vez que esté lo implementamos bien y chau ahr
 
 void menuGeneral();
+void menuLista();
 void ingresarDatos();
 
 tListaContacto *listaContacto;
@@ -23,31 +23,66 @@ int main(){
 
 void menuGeneral(){
 	inicializarLista(&listaContacto);	
-	ingresarDatos();
-	insertarElemento(&listaContacto, &infoContacto);
-	
-	
+	menuLista();
 }
 
 void ingresarDatos(){
+	printf("\n");
 	printf("ID: ");
 	scanf("%d", &infoContacto.id);
-	printf("\nNombre y apellido: ");
+	printf("Nombre y apellido: ");
 	fflush(stdin);
 	scanf("%[^\n]s", &infoContacto.nombreApellido);
-	printf("\nNumero de telefono: ");
+	printf("Numero de telefono: ");
 	//fflush(stdin);
 	scanf("%s", &infoContacto.numeroTelefono);
-	printf("\nSexo(1- varon, 2- mujer): ");
+	printf("Sexo(1- varon, 2- mujer): ");
 	scanf("%d", &infoContacto.sexo);
-	printf("\nCorreo electronico: ");
+	printf("Correo electronico: ");
 	fflush(stdin);
 	scanf("%[^\n]s", &infoContacto.correoElectronico);
-	printf("\nDomicilio: ");
+	printf("Domicilio: ");
 	fflush(stdin);
-	scanf("%[^\n]s", &infoContacto.domicilio);
-	printf("\nEdad: ");
+	scanf("%[^\n]s", &infoContacto.domicilio);;
+	printf("Edad: ");
 	scanf("%d", &infoContacto.edad);
-	printf("\nFecha de cumple: ");
-	scanf("%d", &infoContacto.fechaCumple);
+	printf("Fecha de cumple: ");
+	fflush(stdin);
+	scanf("%[^\n]s", &infoContacto.fechaCumple);
+}
+
+void menuLista(){
+	int opcion;
+	int posicion;
+	do{
+		printf("\n");
+		printf("1- Ingresar contacto\n");
+		printf("2- ver lista de contactos\n");
+		printf("3- borrar contacto\n");
+		printf("4- salir\n");
+		printf("Opcion: ");
+		scanf("%d", &opcion);
+		
+		switch(opcion){
+			case 1:
+				ingresarDatos();
+				insertarElemento(&listaContacto, &infoContacto);
+				break;
+			case 2:
+				printf("\nLISTA DE CONTACTOS\n");
+				visualizarContactos(listaContacto, &infoContacto);
+				break;
+			case 3:
+				printf("\nQue elemento desea eliminar: ");
+				scanf("%d", posicion);
+				eliminarEnPosK(posicion, &listaContacto, &infoContacto);
+				break;
+			case 4:
+				printf("\nSaliendo del menu\n");
+				break;
+			default:
+				printf("\nLa opcion que ingresaste no es correcta, ingresa otra por favor\n");
+				break;
+		}
+	}while(opcion!=4);
 }
