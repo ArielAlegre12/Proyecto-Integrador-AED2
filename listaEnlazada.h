@@ -104,14 +104,16 @@ void visualizarContactos(tListaContacto *listaContacto, tInfoContacto *infoConta
 		printf("\n***Lista de contactos****\n");
 		while(aux != NULL){
 		    printf("ID: %d\n", infoContacto->id);
-	printf("Nombre y apellido: %s\n", infoContacto->nombreApellido);
-	printf("Numero de telefono: %d", infoContacto->numeroTelefono);
-	printf("sexo(1- varon, 2- mujer): %d\n", infoContacto->sexo);
-	printf("Edad: %d\n", infoContacto->sexo);
-	printf("Correo electronico: %s\n", infoContacto->correoElectronico);
-	printf("Domicilio: %s\n", infoContacto->domicilio);
-	printf("Fecha de cumpleaños: %d\n", infoContacto->fechaCumple);
-	printf("\n");
+	        printf("Nombre y apellido: %s\n", infoContacto->nombreApellido);
+	        printf("Numero de telefono: %d", infoContacto->numeroTelefono);
+	        printf("sexo(1- varon, 2- mujer): %d\n", infoContacto->sexo);
+	        printf("Edad: %d\n", infoContacto->sexo);
+	        printf("Correo electronico: %s\n", infoContacto->correoElectronico);
+	        printf("Domicilio: %s\n", infoContacto->domicilio);
+	        printf("Fecha de cumpleaños: %d\n", infoContacto->fechaCumple);
+	        printf("\n");
+	        
+	        aux = aux->siguiente;
 		}
 	}
 }
