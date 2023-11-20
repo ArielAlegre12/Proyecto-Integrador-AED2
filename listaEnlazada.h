@@ -31,10 +31,9 @@ bool listaVacia(tListaContacto *listaContacto);
 void insertarPrimero(tListaContacto **listaContacto, tInfoContacto *infoContacto);
 void insertarAdelante(tListaContacto **listaContacto, tInfoContacto *infoContacto);
 void insertarElemento(tListaContacto **listaContacto, tInfoContacto *infoContacto);
+void eliminarContacto(tListaContacto* );
 
-void eliminarPrimero(tListaContacto **listaContacto, tInfoContacto *infoContacto);
-void eliminarEnPosK(int pos, tListaContacto **listaContacto, tInfoContacto *infoContacto);
-void insertarEnPosK(int pos, tListaContacto **listaContacto, tInfoContacto *infoContacto);
+
 
 void visualizarContactos(tListaContacto *listaContacto, tInfoContacto *);
 
@@ -51,10 +50,10 @@ bool listaVacia(tListaContacto * listaContacto){
 void insertarPrimero(tListaContacto **listaContacto, tInfoContacto *infoContacto) {
     tListaContacto *nuevoNodo = (tListaContacto *)malloc(sizeof(tListaContacto));
     nuevoNodo->datosContacto = *infoContacto;
-    nuevoNodo->siguiente = *listaContacto;
+    nuevoNodo->siguiente = NULL;
     *listaContacto = nuevoNodo;
 	
-	printf("\nContacto guardado!\n");
+	/*printf("\nContacto guardado!\n");
 	printf("ID: %d\n", infoContacto->id);
 	printf("Nombre y apellido: %s\n", infoContacto->nombreApellido);
 	printf("Numero de telefono: %s\n", infoContacto->numeroTelefono);
@@ -63,7 +62,7 @@ void insertarPrimero(tListaContacto **listaContacto, tInfoContacto *infoContacto
 	printf("Correo electronico: %s\n", infoContacto->correoElectronico);
 	printf("Domicilio: %s\n", infoContacto->domicilio);
 	printf("Fecha de cumple: %s\n", infoContacto->fechaCumple);
-	printf("\n");
+	printf("\n");*/
 }
 
 
@@ -73,7 +72,7 @@ void insertarAdelante(tListaContacto **listaContacto, tInfoContacto *infoContact
     nuevoNodo->siguiente = *listaContacto;
     *listaContacto = nuevoNodo;
 	
-	printf("\nContacto guardado!\n");
+	/*printf("\nContacto guardado!\n");
 	printf("ID: %d\n", infoContacto->id);
 	printf("Nombre y apellido: %s\n", infoContacto->nombreApellido);
 	printf("Numero de telefono: %s\n", infoContacto->numeroTelefono);
@@ -82,7 +81,7 @@ void insertarAdelante(tListaContacto **listaContacto, tInfoContacto *infoContact
 	printf("Correo electronico: %s\n", infoContacto->correoElectronico);
 	printf("Domicilio: %s\n", infoContacto->domicilio);
 	printf("Fecha de cumple: %s\n", infoContacto->fechaCumple);
-	printf("\n");
+	printf("\n");*/
 	
 }
 
@@ -97,27 +96,28 @@ void insertarElemento(tListaContacto **listaContacto, tInfoContacto *infoContact
 
 
 void visualizarContactos(tListaContacto *listaContacto, tInfoContacto *infoContacto){
-	tListaContacto *aux;
-	aux = listaContacto;
+    tListaContacto *aux = listaContacto;
 	
-	if(!listaVacia(aux)){
-		printf("\n***Lista de contactos****\n");
-		printf("\n");
-		while(aux != NULL){
-		    printf("ID: %d\n", infoContacto->id);
-	printf("Nombre y apellido: %s\n", infoContacto->nombreApellido);
-	printf("Numero de telefono: %s\n", infoContacto->numeroTelefono);
-	printf("sexo(1- varon, 2- mujer): %d\n", infoContacto->sexo);
-	printf("Edad: %d\n", infoContacto->sexo);
-	printf("Correo electronico: %s\n", infoContacto->correoElectronico);
-	printf("Domicilio: %s\n", infoContacto->domicilio);
-	printf("Fecha de cumple: %s\n", infoContacto->fechaCumple);
-	printf("\n");
-	        
-	        aux = aux->siguiente;
-		}
-	}
+    if(!listaVacia(aux)){
+        printf("\n***Lista de contactos****\n\n");
+        while(aux != NULL){
+            tInfoContacto *info = &(aux->datosContacto);
+            printf("ID: %d\n", info->id);
+            printf("Nombre y apellido: %s\n", info->nombreApellido);
+            printf("Numero de telefono: %s\n", info->numeroTelefono);
+            printf("Sexo(1- varon, 2- mujer): %d\n", info->sexo);
+            printf("Edad: %d\n", info->edad);
+            printf("Correo electronico: %s\n", info->correoElectronico);
+            printf("Domicilio: %s\n", info->domicilio);
+            printf("Fecha de cumple: %s\n", info->fechaCumple);
+            printf("\n");
+            aux = aux->siguiente;
+        }
+    } else {
+        printf("La lista de contactos esta vacia o no ha sido inicializada.\n");
+    }
 }
+
 
 void insertarEnPosK(int pos, tListaContacto **listaContacto, tInfoContacto *infoContacto) {
     int i;
@@ -183,6 +183,38 @@ void eliminarPrimero(tListaContacto **listaContacto, tInfoContacto *infoContacto
 	    
 	    free(nodoSuprimir);
 	    nodoSuprimir = NULL;
+	}
+}
+
+
+void eliminarContacto(tListaContacto* pListaContactosActual){
+	if(pListaContactosActual == NULL){
+		printf("\nLa lista de contactos esta vacia.\n");
+	}else{
+		int idEliminar;
+		printf("\nIngrese el ID del contacto que desea eliminar: ");
+		scanf("%d", &idEliminar);
+		
+		tListaContacto* actual = pListaContactosActual;
+		tListaContacto* anterior = pListaContactosActual;
+		
+		while(actual != NULL && actual->datosContacto.id != idEliminar){
+			anterior = actual;
+			actual = actual->siguiente;
+		}
+		
+		if(actual ==  NULL){
+			printf("No se encontro al contacto con ID %d\n", idEliminar);
+		}else{
+			if(anterior == NULL){
+				pListaContactosActual = actual->siguiente;
+			}else{
+				anterior->siguiente = actual->siguiente;
+			}
+			
+			free(actual);
+			printf("Contacto con ID %d eliminado correctamente\n", idEliminar);
+		}
 	}
 }
 
