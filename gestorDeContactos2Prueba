@@ -20,8 +20,6 @@ tListaContacto* leerListaDesdeArchivo(const char* );
 void ingresarUsuarioExistente();
 void crearNuevoUsuario();
 void registrarNuevoContacto();
-void mostrarListaContactos(tListaContacto*);
-void eliminarContacto(tListaContacto*);
 void menu();
 void menuUsuario();
 void cambiarUsuario();
@@ -267,61 +265,6 @@ void registrarNuevoContacto() {
     }
 }
 
-
-
-void mostrarListaContactos(tListaContacto* pListaContactosActual){
-    printf("\n--- LISTA DE CONTACTOS ---\n");
-    tListaContacto* aux = pListaContactosActual;
-    int contador = 1;
-    
-    while(aux !=  NULL){
-        printf("Contacto : %d\n", contador);
-        printf("ID: %d\n", aux->datosContacto.id);
-        printf("Nombre: %s\n", aux->datosContacto.nombreApellido);
-        printf("Teléfono: %s\n", aux->datosContacto.numeroTelefono);
-        printf("Sexo (1-Varón, 2-Mujer): %d\n", aux->datosContacto.sexo);
-        printf("Edad: %d\n", aux->datosContacto.edad);
-        printf("Correo electrónico: %s\n", aux->datosContacto.correoElectronico);
-        printf("Domicilio: %s\n", aux->datosContacto.domicilio);
-        printf("Fecha de cumpleaños: %s\n", aux->datosContacto.fechaCumple);
-        printf("\n");
-        
-        aux = aux->siguiente;
-        contador++;
-    }
-    printf("\n");
-}
-
-void eliminarContacto(tListaContacto* pListaContactosActual){
-	if(pListaContactosActual == NULL){
-		printf("\nLa lista de contactos esta vacia.\n");
-	}else{
-		int idEliminar;
-		printf("\nIngrese el ID del contacto que desea eliminar: ");
-		scanf("%d", &idEliminar);
-		
-		tListaContacto* actual = pListaContactosActual;
-		tListaContacto* anterior = pListaContactosActual;
-		
-		while(actual != NULL && actual->datosContacto.id != idEliminar){
-			anterior = actual;
-			actual = actual->siguiente;
-		}
-		
-		if(actual ==  NULL){
-			printf("No se encontro al contacto con ID %d\n", idEliminar);
-		}else{
-			if(anterior == NULL){
-				pListaContactosActual = actual->siguiente;
-			}else{
-				anterior->siguiente = actual->siguiente;
-			}
-			
-			free(actual);
-			printf("Contacto con ID %d eliminado correctamente\n", idEliminar);
-		}
-	}
-}
 
 void cambiarUsuario() {
     char nuevoNombre[MAX_LONGITUD_NOMBRE];
