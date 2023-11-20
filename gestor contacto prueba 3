@@ -1,19 +1,17 @@
-/*
-este codigo si guarda los datos, al fin lptm, ahora solo hay que implementar las otra funciones xd
-*/
-
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
 #include "listaEnlazada.h"
 
-tListaContacto *listaContacto = NULL;
+tListaContacto *listaContacto = NULL; //inicializo la list
 
 void ingresarDatos();
 void grabarArchivo();
 void cargarDatosDesdeArchivo();
 void guardarDatosEnArchivo();
 void mostrarContactos();
+tInfoContacto *buscarContactoPorID(tListaContacto *, int);
+void buscarContacto();
 
 void menu();
 
@@ -32,8 +30,9 @@ void menu() {
         printf("1- Agregar contacto\n");
         printf("2- Buscar contacto\n");
         printf("3- Borrar contacto\n");
-        printf("4- Mostrar todos los contactos\n");
-        printf("5- Salir\n");
+        printf("4- Guardar datos\n");
+        printf("5- Mostrar todos los contactos\n");
+        printf("6- Salir\n");
         scanf("%d", &opcion);
 
         switch (opcion) {
@@ -41,26 +40,28 @@ void menu() {
                 ingresarDatos();
                 break;
             case 2:
-                // Agrega la lógica para buscar un contacto por ID u otro criterio
+            	buscarContacto();
                 break;
             case 3:
-                // Agrega la lógica para eliminar un contacto por ID u otro criterio
+                eliminarContacto(listaContacto);
                 break;
             case 4:
+            	guardarDatosEnArchivo();
+            case 5:
                 mostrarContactos();
                 break;
-            case 5:
+            case 6:
                 printf("\nSaliendo del gestor....\n");
                 break;
             default:
                 printf("\nOpción no válida. Por favor, elija una opción del 1 al 5.\n");
                 break;
         }
-    } while (opcion != 5);
+    } while (opcion != 6);
 }
 
 void ingresarDatos() {
-    tInfoContacto nuevoContacto;
+    tInfoContacto nuevoContacto; //creamos una estructura para el nuevo contacto
 
     
 	printf("\n");
@@ -87,7 +88,7 @@ void ingresarDatos() {
 	scanf("%[^\n]s", &nuevoContacto.fechaCumple);
 
 
-    insertarElemento(&listaContacto, &nuevoContacto);
+    insertarElemento(&listaContacto, &nuevoContacto); //llamo a la funcion de insertar elemento
 }
 
 void cargarDatosDesdeArchivo() {
@@ -141,4 +142,40 @@ void mostrarContactos() {
         printf("\n");
         actual = actual->siguiente;
     }
+}
+
+
+void buscarContacto(){
+	int idBusqueda;
+    printf("Ingrese el ID del contacto a buscar: ");
+    scanf("%d", &idBusqueda);
+    tInfoContacto *contactoEncontrado = buscarContactoPorID(listaContacto, idBusqueda);
+    
+    if (contactoEncontrado != NULL) {
+        printf("\nContacto encontrado:\n");
+        printf("ID: %d\n", contactoEncontrado->id);
+	    printf("Nombre y apellido: %s\n", contactoEncontrado->nombreApellido);
+	    printf("Numero de telefono: %s\n", contactoEncontrado->numeroTelefono);
+	    printf("sexo(1- varon, 2- mujer): %d\n", contactoEncontrado->sexo);
+	    printf("Edad: %d\n", contactoEncontrado->sexo);
+	    printf("Correo electronico: %s\n", contactoEncontrado->correoElectronico);
+	    printf("Domicilio: %s\n", contactoEncontrado->domicilio);
+	    printf("Fecha de cumple: %s\n", contactoEncontrado->fechaCumple);
+	    printf("\n");
+    } else {
+        printf("\nNo se encontró ningún contacto con el ID especificado.\n");
+    }
+}
+
+tInfoContacto *buscarContactoPorID(tListaContacto *lista, int idABuscar) {
+    tListaContacto *actual = lista;
+    
+    while (actual != NULL) {
+        if (actual->datosContacto.id == idABuscar) {
+            return &(actual->datosContacto); // Retorna un puntero al contacto encontrado
+        }
+        actual = actual->siguiente;
+    }
+    
+    return NULL; // Retorna NULL si no se encuentra el contacto con el ID especificado
 }
