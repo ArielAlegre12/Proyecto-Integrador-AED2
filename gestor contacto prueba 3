@@ -1,0 +1,144 @@
+/*
+este codigo si guarda los datos, al fin lptm, ahora solo hay que implementar las otra funciones xd
+*/
+
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include "listaEnlazada.h"
+
+tListaContacto *listaContacto = NULL;
+
+void ingresarDatos();
+void grabarArchivo();
+void cargarDatosDesdeArchivo();
+void guardarDatosEnArchivo();
+void mostrarContactos();
+
+void menu();
+
+int main() {
+    cargarDatosDesdeArchivo();
+    menu();
+    guardarDatosEnArchivo();
+    return 0;
+}
+
+void menu() {
+    int opcion;
+
+    do {
+        printf("\n----MENU----\n");
+        printf("1- Agregar contacto\n");
+        printf("2- Buscar contacto\n");
+        printf("3- Borrar contacto\n");
+        printf("4- Mostrar todos los contactos\n");
+        printf("5- Salir\n");
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1:
+                ingresarDatos();
+                break;
+            case 2:
+                // Agrega la lógica para buscar un contacto por ID u otro criterio
+                break;
+            case 3:
+                // Agrega la lógica para eliminar un contacto por ID u otro criterio
+                break;
+            case 4:
+                mostrarContactos();
+                break;
+            case 5:
+                printf("\nSaliendo del gestor....\n");
+                break;
+            default:
+                printf("\nOpción no válida. Por favor, elija una opción del 1 al 5.\n");
+                break;
+        }
+    } while (opcion != 5);
+}
+
+void ingresarDatos() {
+    tInfoContacto nuevoContacto;
+
+    
+	printf("\n");
+	printf("ID: ");
+	scanf("%d", &nuevoContacto.id);
+	printf("Nombre y apellido: ");
+	fflush(stdin);
+	scanf("%[^\n]s", &nuevoContacto.nombreApellido);
+	printf("Numero de telefono: ");
+	//fflush(stdin);
+	scanf("%s", &nuevoContacto.numeroTelefono);
+	printf("Sexo(1- varon, 2- mujer): ");
+	scanf("%d", &nuevoContacto.sexo);
+	printf("Correo electronico: ");
+	fflush(stdin);
+	scanf("%[^\n]s", &nuevoContacto.correoElectronico);
+	printf("Domicilio: ");
+	fflush(stdin);
+	scanf("%[^\n]s", &nuevoContacto.domicilio);;
+	printf("Edad: ");
+	scanf("%d", &nuevoContacto.edad);
+	printf("Fecha de cumple: ");
+	fflush(stdin);
+	scanf("%[^\n]s", &nuevoContacto.fechaCumple);
+
+
+    insertarElemento(&listaContacto, &nuevoContacto);
+}
+
+void cargarDatosDesdeArchivo() {
+    FILE *archivo = fopen("contactos.dat", "rb");
+    if (archivo == NULL) {
+        printf("No se encontro el archivo de contactos o está vacío.\n");
+        return;
+    }
+
+    tInfoContacto info;
+    while (fread(&info, sizeof(tInfoContacto), 1, archivo) == 1) {
+        insertarElemento(&listaContacto, &info);
+    }
+
+    fclose(archivo);
+}
+
+void guardarDatosEnArchivo() {
+    FILE *archivo = fopen("contactos.dat", "wb");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo para escritura.\n");
+        return;
+    }
+
+    tListaContacto *actual = listaContacto;
+    while (actual != NULL) {
+        fwrite(&(actual->datosContacto), sizeof(tInfoContacto), 1, archivo);
+        actual = actual->siguiente;
+    }
+
+    fclose(archivo);
+}
+
+void mostrarContactos() {
+    if (listaContacto == NULL) {
+        printf("\nLa lista de contactos está vacía.\n");
+        return;
+    }
+
+    tListaContacto *actual = listaContacto;
+    printf("\n***Lista de contactos***\n");
+    while (actual != NULL) {
+        printf("\nID: %d\n", actual->datosContacto.id);
+        printf("Nombre y apellido: %s\n", actual->datosContacto.nombreApellido);
+        printf("Numero de telefono: %s\n", actual->datosContacto.numeroTelefono);
+        printf("Sexo: %d\n", actual->datosContacto.sexo);
+        printf("Edad: %d\n", actual->datosContacto.edad);
+        printf("Correo electronico: %s\n", actual->datosContacto.correoElectronico);
+        printf("Domicilio: %s\n", actual->datosContacto.domicilio);
+        printf("Fecha de cumple: %s\n", actual->datosContacto.fechaCumple);
+        printf("\n");
+        actual = actual->siguiente;
+    }
+}
