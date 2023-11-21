@@ -1,3 +1,9 @@
+/*
+Aqui colocamos las funciones de la lista enlazada y tambien la estructura de los datos.
+pero decidimos no poner algunas funciones basicas de la lista, como por ejemplo la de 
+buscar en cierta posicion.
+*/
+
 #ifndef LISTA_ENLAZADA_H
 #define LISTA_ENLAZADA_H
 
@@ -35,10 +41,6 @@ void eliminarContacto(tListaContacto* );
 
 
 
-void visualizarContactos(tListaContacto *listaContacto, tInfoContacto *);
-
-
-
 void inicializarLista(tListaContacto **listaContacto) {
     *listaContacto = NULL;
 }
@@ -53,16 +55,6 @@ void insertarPrimero(tListaContacto **listaContacto, tInfoContacto *infoContacto
     nuevoNodo->siguiente = NULL;
     *listaContacto = nuevoNodo;
 	
-	/*printf("\nContacto guardado!\n");
-	printf("ID: %d\n", infoContacto->id);
-	printf("Nombre y apellido: %s\n", infoContacto->nombreApellido);
-	printf("Numero de telefono: %s\n", infoContacto->numeroTelefono);
-	printf("sexo(1- varon, 2- mujer): %d\n", infoContacto->sexo);
-	printf("Edad: %d\n", infoContacto->sexo);
-	printf("Correo electronico: %s\n", infoContacto->correoElectronico);
-	printf("Domicilio: %s\n", infoContacto->domicilio);
-	printf("Fecha de cumple: %s\n", infoContacto->fechaCumple);
-	printf("\n");*/
 }
 
 
@@ -72,16 +64,6 @@ void insertarAdelante(tListaContacto **listaContacto, tInfoContacto *infoContact
     nuevoNodo->siguiente = *listaContacto;
     *listaContacto = nuevoNodo;
 	
-	/*printf("\nContacto guardado!\n");
-	printf("ID: %d\n", infoContacto->id);
-	printf("Nombre y apellido: %s\n", infoContacto->nombreApellido);
-	printf("Numero de telefono: %s\n", infoContacto->numeroTelefono);
-	printf("sexo(1- varon, 2- mujer): %d\n", infoContacto->sexo);
-	printf("Edad: %d\n", infoContacto->sexo);
-	printf("Correo electronico: %s\n", infoContacto->correoElectronico);
-	printf("Domicilio: %s\n", infoContacto->domicilio);
-	printf("Fecha de cumple: %s\n", infoContacto->fechaCumple);
-	printf("\n");*/
 	
 }
 
@@ -94,29 +76,6 @@ void insertarElemento(tListaContacto **listaContacto, tInfoContacto *infoContact
     }
 }
 
-
-void visualizarContactos(tListaContacto *listaContacto, tInfoContacto *infoContacto){
-    tListaContacto *aux = listaContacto;
-	
-    if(!listaVacia(aux)){
-        printf("\n***Lista de contactos****\n\n");
-        while(aux != NULL){
-            tInfoContacto *info = &(aux->datosContacto);
-            printf("ID: %d\n", info->id);
-            printf("Nombre y apellido: %s\n", info->nombreApellido);
-            printf("Numero de telefono: %s\n", info->numeroTelefono);
-            printf("Sexo(1- varon, 2- mujer): %d\n", info->sexo);
-            printf("Edad: %d\n", info->edad);
-            printf("Correo electronico: %s\n", info->correoElectronico);
-            printf("Domicilio: %s\n", info->domicilio);
-            printf("Fecha de cumple: %s\n", info->fechaCumple);
-            printf("\n");
-            aux = aux->siguiente;
-        }
-    } else {
-        printf("La lista de contactos esta vacia o no ha sido inicializada.\n");
-    }
-}
 
 void eliminarContacto(tListaContacto* pListaContactosActual){
 	if(pListaContactosActual == NULL){
