@@ -1,201 +1,71 @@
-tListaContacto *listaContacto = NULL;//inicializo la lista
-void cargarDatosDesdeArchivo();
-void guardarDatosEnArchivo();
-void mostrarContactos();
-tInfoContacto *buscarContactoPorID();
-void buscarContacto();
-void ingresarDatos();
+/*
+Este es el programa principal, tiene un menu en el cual le da al usuario
+distintas opciones.
+*/
 
-void ingresarDatos(){
-    tInfoContacto nuevoContacto; //creamos una estructura para el nuevo contacto
-
-    
-	printf("\n");
-	printf("ID: ");
-	scanf("%d", &nuevoContacto.id);
-	printf("Nombre y apellido: ");
-	fflush(stdin);
-	scanf("%[^\n]s", &nuevoContacto.nombreApellido);
-	printf("Numero de telefono: ");
-	//fflush(stdin);
-	scanf("%s", &nuevoContacto.numeroTelefono);
-	printf("Sexo(1- varon, 2- mujer): ");
-	scanf("%d", &nuevoContacto.sexo);
-	printf("Correo electronico: ");
-	fflush(stdin);
-	scanf("%[^\n]s", &nuevoContacto.correoElectronico);
-	printf("Domicilio: ");
-	fflush(stdin);
-	scanf("%[^\n]s", &nuevoContacto.domicilio);;
-	printf("Edad: ");
-	scanf("%d", &nuevoContacto.edad);
-	printf("Fecha de cumple: ");
-	fflush(stdin);
-	scanf("%[^\n]s", &nuevoContacto.fechaCumple);
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include "listaEnlazada.h"
+#include "funcionesArchivo.h" 
 
 
-    insertarElemento(&listaContacto, &nuevoContacto); //llamo a la funcion de insertar elemento
+void menu();
+
+int main() {
+    cargarDatosDesdeArchivo(); //aca basicamente lo que hace es leer los datos del archivo y reconstruir la lista y sus nodos
+    menu();  //el menu con las opciones para el usuario
+    guardarDatosEnArchivo(); //guardamos la informacion al momento de salida del programa
+    return 0;
 }
 
-
-void cargarDatosDesdeArchivo() {
-    FILE *archivo = fopen("contactos.dat", "rb");
-    if (archivo == NULL) {
-        printf("No se encontro el archivo de contactos o está vacío.\n");
-        return;
-    }
-
-    tInfoContacto info;
-    while (fread(&info, sizeof(tInfoContacto), 1, archivo) == 1) {
-        insertarElemento(&listaContacto, &info);
-    }
-
-    fclose(archivo);
-}
-
-void guardarDatosEnArchivo() {
-    FILE *archivo = fopen("contactos.dat", "wb");
-    if (archivo == NULL) {
-        printf("Error al abrir el archivo para escritura.\n");
-        return;
-    }
-
-    tListaContacto *actual = listaContacto;
-    while (actual != NULL) {
-        fwrite(&(actual->datosContacto), sizeof(tInfoContacto), 1, archivo);
-        actual = actual->siguiente;
-    }
-
-    fclose(archivo);
-}
-
-void mostrarContactos() {
-    if (listaContacto == NULL) {
-        printf("\nLa lista de contactos está vacía.\n");
-        return;
-    }
-
-    tListaContacto *actual = listaContacto;
-    printf("\n***Lista de contactos***\n");
-    while (actual != NULL) {
-        printf("\nID: %d\n", actual->datosContacto.id);
-        printf("Nombre y apellido: %s\n", actual->datosContacto.nombreApellido);
-        printf("Numero de telefono: %s\n", actual->datosContacto.numeroTelefono);
-        printf("Sexo: %d\n", actual->datosContacto.sexo);
-        printf("Edad: %d\n", actual->datosContacto.edad);
-        printf("Correo electronico: %s\n", actual->datosContacto.correoElectronico);
-        printf("Domicilio: %s\n", actual->datosContacto.domicilio);
-        printf("Fecha de cumple: %s\n", actual->datosContacto.fechaCumple);
-        printf("\n");
-        actual = actual->siguiente;
-    }
-}
-
-tInfoContacto *buscarContactoPorID(tListaContacto *lista, int idABuscar) {
-    tListaContacto *actual = lista;
-    
-    while (actual != NULL) {
-        if (actual->datosContacto.id == idABuscar) {
-            return &(actual->datosContacto); // Retorna un puntero al contacto encontrado
-        }
-        actual = actual->siguiente;
-    }
-    
-    return NULL; // Retorna NULL si no se encuentra el contacto con el ID especificado
-}
-
-void buscarContacto(){
-	int idBusqueda;
-    printf("Ingrese el ID del contacto a buscar: ");
-    scanf("%d", &idBusqueda);
-    tInfoContacto *contactoEncontrado = buscarContactoPorID(listaContacto, idBusqueda);
-    
-    if (contactoEncontrado != NULL) {
-        printf("\nContacto encontrado:\n");
-        printf("ID: %d\n", contactoEncontrado->id);
-	    printf("Nombre y apellido: %s\n", contactoEncontrado->nombreApellido);
-	    printf("Numero de telefono: %s\n", contactoEncontrado->numeroTelefono);
-	    printf("sexo(1- varon, 2- mujer): %d\n", contactoEncontrado->sexo);
-	    printf("Edad: %d\n", contactoEncontrado->sexo);
-	    printf("Correo electronico: %s\n", contactoEncontrado->correoElectronico);
-	    printf("Domicilio: %s\n", contactoEncontrado->domicilio);
-	    printf("Fecha de cumple: %s\n", contactoEncontrado->fechaCumple);
-	    printf("\n");
-    } else {
-        printf("\nNo se encontró ningún contacto con el ID especificado.\n");
-    }
-}
-
-
-void editarContacto(tListaContacto *listaContacto, int id) {
-    tListaContacto *actual = listaContacto;
-
-    while (actual != NULL && actual->datosContacto.id != id) {
-        actual = actual->siguiente;
-    }
-
-    if (actual == NULL) {
-        printf("No se encontro ningun contacto con el ID proporcionado.\n");
-        return;
-    }
-
+void menu() {
     int opcion;
-    do{
-    printf("Seleccione que campo editar:\n");
-    printf("1 - ID\n");
-	printf("2 - Nombre y apellido\n");
-	printf("3 - Numero de telefono\n");
-	printf("4 - sexo(1- varon, 2- mujer)\n");
-	printf("5 - Edad\n");
-	printf("6 - Correo electronico\n");
-	printf("7 - Domicilio\n");
-	printf("8 - Fecha de cumple\n");
-	printf("9 - Dejar de editar\n");
-    scanf("%d", &opcion);
 
-    switch (opcion) {
-        case 1:
-            printf("Nuevo ID: ");
-            scanf("%d", &actual->datosContacto.id);
-            break;
-        case 2:
-            printf("Nuevo Nombre y Apellido: ");
-            scanf(" %[^\n]s", actual->datosContacto.nombreApellido);
-            break;
-        case 3:
-        	printf("Nuevo Numero de Telefono: ");
-        	scanf("%[^\n]s", actual->datosContacto.numeroTelefono);
-            break;
-        case 4:
-        	printf("Nuevo Sexo(1. Varon, 2. Mujer): ");
-        	scanf("%d", &actual->datosContacto.sexo);
-        	break;
-        case 5:
-        	printf("Nueva Edad: ");
-        	scanf("%d", &actual->datosContacto.edad);
-        	break;
-        case 6:
-        	printf("Nuevo Correo Electronico: ");
-        	scanf("%[^\n]s", actual->datosContacto.correoElectronico);
-        	break;
-        case 7:
-        	printf("Nuevo domicilio: ");
-        	scanf("%[^\n]s", actual->datosContacto.domicilio);
-        	break;
-        case 8:
-        	printf("Nueva fecha de cumple: ");
-        	scanf("%[^\n]s", actual->datosContacto.fechaCumple);
-        	break;
-        case 9:
-        	printf("\nSaliendo de la Edicion...\n");
-        	break;
-        default:
-            printf("Opción no válida.\n");
-            return;
-    }
-    
-    	
-	}while(opcion != 9);
+    do {
+        printf("\n----MENU----\n");
+        printf("1 - Agregar Contacto\n");
+        printf("2 - Buscar Contacto\n");
+        printf("3 - Borrar Contacto\n");
+        printf("4 - Guardar Datos\n");
+        printf("5 - Editar un Contacto\n");
+        printf("6 - Mostrar Todos los Contactos\n");
+        printf("7 - Salir\n");
+        scanf("%d", &opcion);
 
-    printf("\nContacto actualizado correctamente.\n");
+        switch (opcion) { //tratamos de modularizar todas las funciones para una mejor legibilidad
+            case 1:
+                ingresarDatos();
+                guardarDatosEnArchivo();
+                break;
+            case 2:
+            	buscarContacto();
+                break;
+            case 3:
+                eliminarContacto(listaContacto);
+                break;
+            case 4:
+            	guardarDatosEnArchivo();
+            	guardarDatosEnArchivo();
+            	break;
+            case 5:
+            	printf("Ingrese el ID del contacto que desea editar: ");
+                int idEditar;
+                scanf("%d", &idEditar);
+                editarContacto(listaContacto, idEditar);
+                guardarDatosEnArchivo();
+                break;
+            case 6:
+            	mostrarContactos();
+            	break;
+            case 7:
+                printf("\nSaliendo del gestor....\n");
+                break;
+            default:
+                printf("\nOpción no válida. Por favor, elija una opción del 1 al 5.\n");
+                break;
+        }
+    } while (opcion != 7);
 }
+
+
