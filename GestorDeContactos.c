@@ -1,3 +1,8 @@
+/*
+Este es el programa principal, tiene un menu en el cual le da al usuario
+distintas opciones.
+*/
+
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -8,9 +13,9 @@
 void menu();
 
 int main() {
-    cargarDatosDesdeArchivo();
-    menu();
-    guardarDatosEnArchivo();
+    cargarDatosDesdeArchivo(); //aca basicamente lo que hace es leer los datos del archivo y reconstruir la lista y sus nodos
+    menu();  //el menu con las opciones para el usuario
+    guardarDatosEnArchivo(); //guardamos la informacion al momento de salida del programa
     return 0;
 }
 
@@ -28,7 +33,7 @@ void menu() {
         printf("7 - Salir\n");
         scanf("%d", &opcion);
 
-        switch (opcion) {
+        switch (opcion) { //tratamos de modularizar todas las funciones para una mejor legibilidad
             case 1:
                 ingresarDatos();
                 guardarDatosEnArchivo();
@@ -40,6 +45,7 @@ void menu() {
                 eliminarContacto(listaContacto);
                 break;
             case 4:
+            	guardarDatosEnArchivo();
             	guardarDatosEnArchivo();
             	break;
             case 5:
