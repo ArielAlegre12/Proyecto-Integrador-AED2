@@ -86,7 +86,7 @@ void mostrarContactos() {
         printf("\nID: %d\n", actual->datosContacto.id);
         printf("Nombre y apellido: %s\n", actual->datosContacto.nombreApellido);
         printf("Numero de telefono: %s\n", actual->datosContacto.numeroTelefono);
-        printf("Sexo: %d\n", actual->datosContacto.sexo);
+        printf("Sexo(1- varon, 2- mujer): %d\n", actual->datosContacto.sexo);
         printf("Edad: %d\n", actual->datosContacto.edad);
         printf("Correo electronico: %s\n", actual->datosContacto.correoElectronico);
         printf("Domicilio: %s\n", actual->datosContacto.domicilio);
